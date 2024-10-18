@@ -1,0 +1,29 @@
+@use "@assets/variables";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  width: 500px;
+  max-width: 100vw;
+
+  &__header {
+    display: flex;
+    justify-content: space-around;
+
+    padding: 15px;
+    background-color: variables.$light-background-color;
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 50px;
+
+    a {
+      color: variables.$light-text-color;
+    }
+  }
+
+  &__outlet {
+    display: flex;
+    flex-direction: column;
+  }
+}

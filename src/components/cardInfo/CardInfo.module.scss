@@ -1,0 +1,29 @@
+@use "@assets/variables";
+
+.article_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-size: 12px;
+  margin-top: 30px;
+
+  .author_info {
+    display: flex;
+    flex-direction: column;
+
+    &__email {
+      color: variables.$light-text-color;
+    }
+
+    &__name {
+      font-weight: bold;
+    }
+  }
+
+  .article_dates {
+    display: flex;
+    flex-direction: column;
+    color: variables.$light-text-color;
+    text-align: right;
+  }
+}

@@ -1,0 +1,12 @@
+@use "@assets/variables";
+
+@mixin ThinSquareBorder {
+  border-radius: 12px;
+  border: 1px solid variables.$light-border-color;
+}
+
+@mixin EllipsisText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

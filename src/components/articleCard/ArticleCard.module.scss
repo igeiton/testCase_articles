@@ -1,0 +1,66 @@
+@use "@assets/variables";
+@use "@assets/mixins";
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  padding: 15px;
+  border-radius: 12px;
+  background-color: variables.$light-background-color;
+
+  &__title {
+    display: flex;
+    gap: 25px;
+
+    &__image {
+      max-width: 200px;
+      max-height: 100px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        @include mixins.ThinSquareBorder;
+      }
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      width: 100%;
+
+      .btns {
+        display: flex;
+        width: 100%;
+      }
+
+      .link {
+        margin-right: auto;
+        margin-top: auto;
+        font-size: 12px;
+        color: variables.$light-text-color;
+
+        &:hover {
+          cursor: pointer;
+          color: #000000;
+        }
+      }
+    }
+  }
+
+  button {
+    flex-grow: 1;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background-color: inherit;
+    border: 1px solid variables.$light-border-color;
+
+    &:hover {
+      cursor: pointer;
+      background: variables.$light-background-color;
+    }
+  }
+}

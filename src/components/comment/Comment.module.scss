@@ -1,0 +1,21 @@
+@use "@assets/variables";
+
+.comment_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &.indent {
+    padding-left: 25px;
+    border-left: 1px solid variables.$light-border-color;
+  }
+
+  .comment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: variables.$light-background-color;
+  }
+}

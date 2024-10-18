@@ -1,0 +1,10 @@
+@use "@assets/mixins";
+
+.content {
+  font-size: 14px;
+  word-break: break-all;
+
+  &.clipped_content {
+    @include mixins.EllipsisText;
+  }
+}

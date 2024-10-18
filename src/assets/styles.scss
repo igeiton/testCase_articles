@@ -1,0 +1,24 @@
+#root,
+body {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 100vw;
+  min-height: 100vh;
+
+  padding: unset;
+  margin: unset;
+
+  font-family: "Montserrat", sans-serif;
+
+  a,
+  a:visited {
+    color: unset;
+    text-decoration: none;
+  }
+
+  textarea {
+    font-family: "Montserrat", sans-serif;
+    resize: vertical;
+  }
+}

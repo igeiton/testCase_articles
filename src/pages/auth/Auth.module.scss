@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+
+  .input {
+    padding: 10px 15px;
+  }
+
+  .btn {
+    padding: 10px 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
