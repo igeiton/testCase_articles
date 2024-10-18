@@ -21,7 +21,7 @@ export const api = async <T>(
   data?: object,
   defaultHeaders?: boolean,
 ): Promise<T> => {
-  const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}${path}/`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}/`, {
     method,
     headers: defaultHeaders ? getDefaultHeaders() : getHeaders(),
     body: getBody(data),
