@@ -16,8 +16,8 @@ export const ArticleContent: FC<TArticleContentProps> = ({
   setContent,
   clippedContent,
   ...props
-}) => {
-  return isEdit ? (
+}) =>
+  isEdit ? (
     <textarea
       value={content}
       onChange={(e) => setContent(e.target.value)}
@@ -33,4 +33,3 @@ export const ArticleContent: FC<TArticleContentProps> = ({
       {content}
     </span>
   );
-};

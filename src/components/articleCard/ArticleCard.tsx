@@ -53,20 +53,23 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
       [title, content, img, article.id, updateArticle, setEdit],
     );
 
-    const handleUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files?.[0]) {
-        setImg(e.target.files[0]);
-      } else {
-        setImg(article.content);
-      }
-    };
+    const handleUploadFile = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.[0]) {
+          setImg(e.target.files[0]);
+        } else {
+          setImg(article.content);
+        }
+      },
+      [article.content],
+    );
 
     const handleReset = useCallback(() => {
       setTitle(article.title);
       setContent(article.content);
       setImg(article.image);
       setEdit(false);
-    }, [article]);
+    }, [article.title, article.content, article.image]);
 
     return (
       <div className={styles.article}>

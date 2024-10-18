@@ -13,8 +13,8 @@ export const ArticleTitle: FC<TArticleTitleProps> = ({
   isEdit,
   setTitle,
   ...props
-}) => {
-  return isEdit ? (
+}) =>
+  isEdit ? (
     <input
       type="text"
       value={title}
@@ -26,4 +26,3 @@ export const ArticleTitle: FC<TArticleTitleProps> = ({
       {title}
     </span>
   );
-};

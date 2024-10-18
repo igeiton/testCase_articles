@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useCallback, useState } from "react";
 import { Navigate, NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -19,10 +19,13 @@ export const Auth: FC = observer(() => {
 
   const { isAuthorized, loadTokens } = store.authStore;
 
-  const handleLogIn = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    loadTokens({ username, password });
-  };
+  const handleLogIn = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      loadTokens({ username, password });
+    },
+    [username, password, loadTokens],
+  );
 
   const storagePath = loadFromLocalStorage(STORAGE_PATH);
 

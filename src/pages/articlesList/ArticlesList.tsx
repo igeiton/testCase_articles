@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { observer } from "mobx-react-lite";
 
 import { ArticleCard } from "../../components/articleCard/ArticleCard";
@@ -14,28 +21,31 @@ export const ArticlesList: FC = observer(() => {
 
   const { isLoading, articles, loadArticles, addArticle } = store.articlesStore;
 
-  const handleAddNewArticle = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleAddNewArticle = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("title", title);
-    formData.append("content", content);
+      formData.append("title", title);
+      formData.append("content", content);
 
-    if (img) {
-      formData.append("image", img);
-    }
+      if (img) {
+        formData.append("image", img);
+      }
 
-    addArticle(formData).then(() => loadArticles(false));
-  };
+      addArticle(formData).then(() => loadArticles(false));
+    },
+    [title, content, img, loadArticles, addArticle],
+  );
 
-  const handleUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setImg(e.target.files[0]);
     } else {
       setImg(null);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadArticles();

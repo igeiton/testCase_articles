@@ -43,5 +43,6 @@ export const Routes: FC = () => {
         },
       ],
     },
+    { path: "/*", element: <div>Page 404</div> },
   ]);
 };

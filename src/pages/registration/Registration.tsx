@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useCallback, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -25,12 +25,16 @@ export const Registration: FC = observer(() => {
 
   const { isAuthorized } = store.authStore;
 
-  const handleReg = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    registration({ email, first_name, last_name, password, username }).then(
-      () => navigate(AUTH_PATH),
-    );
-  };
+  const handleReg = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+
+      registration({ email, first_name, last_name, password, username }).then(
+        () => navigate(AUTH_PATH),
+      );
+    },
+    [email, first_name, last_name, password, username, navigate],
+  );
 
   const storagePath = loadFromLocalStorage(STORAGE_PATH);
 

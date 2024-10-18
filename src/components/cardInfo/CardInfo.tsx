@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 
 import { TAuthor } from "../../models/userTypes";
 
@@ -15,12 +15,13 @@ export const CardInfo: FC<TArticleCardInfoProps> = ({
   updated,
   created,
 }) => {
-  const formatDate = (date: string) => {
+  const formatDate = useCallback((date: string) => {
     return new Date(date).toLocaleString("ru-RU", {
       dateStyle: "long",
       timeStyle: "short",
     });
-  };
+  }, []);
+
   return (
     <div className={styles.article_info}>
       <div className={styles.author_info}>

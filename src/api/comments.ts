@@ -14,7 +14,7 @@ export const updateComment = async (
   articleId: number,
   commentId: number,
   data: TNewComment,
-) => {
+): Promise<TComment> => {
   return await api("PUT", `articles/${articleId}/comments/${commentId}`, {
     ...data,
   });

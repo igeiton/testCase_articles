@@ -3,7 +3,7 @@ import { TAuthor } from "./userTypes";
 export type TComment = {
   id: number;
   author: TAuthor;
-  content: "test";
+  content: string;
   created: string;
   updated: string;
   article: number;
