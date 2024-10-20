@@ -1,5 +1,6 @@
 import { FC } from "react";
 import classNames from "classnames";
+import { TextField } from "@mui/material";
 
 import styles from "./ArticleContent.module.scss";
 
@@ -18,7 +19,9 @@ export const ArticleContent: FC<TArticleContentProps> = ({
   ...props
 }) =>
   isEdit ? (
-    <textarea
+    <TextField
+      type="text"
+      multiline
       value={content}
       onChange={(e) => setContent(e.target.value)}
       {...props}

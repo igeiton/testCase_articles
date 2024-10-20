@@ -1,6 +1,7 @@
 import { FC, MouseEvent, useCallback, useState } from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { Button, Link, TextField } from "@mui/material";
 
 import {
   loadFromLocalStorage,
@@ -17,6 +18,8 @@ import styles from "./Registration.module.scss";
 export const Registration: FC = observer(() => {
   const navigate = useNavigate();
 
+  const [isLoading, setLoading] = useState(false);
+
   const [email, setEmail] = useState<string>("");
   const [first_name, setFirstName] = useState<string>("");
   const [last_name, setLastName] = useState<string>("");
@@ -28,10 +31,11 @@ export const Registration: FC = observer(() => {
   const handleReg = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
+      setLoading(true);
 
-      registration({ email, first_name, last_name, password, username }).then(
-        () => navigate(AUTH_PATH),
-      );
+      registration({ email, first_name, last_name, password, username })
+        .then(() => navigate(AUTH_PATH))
+        .finally(() => setLoading(false));
     },
     [email, first_name, last_name, password, username, navigate],
   );
@@ -45,42 +49,52 @@ export const Registration: FC = observer(() => {
 
   return (
     <form className={styles.form}>
-      <input
+      <TextField
         type="email"
+        label="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className={styles.input}
       />
-      <input
+      <TextField
         type="firstName"
+        label="First Name"
         value={first_name}
         onChange={(e) => setFirstName(e.target.value)}
         className={styles.input}
       />
-      <input
+      <TextField
         type="lastName"
+        label="Last Name"
         value={last_name}
         onChange={(e) => setLastName(e.target.value)}
         className={styles.input}
       />
-      <input
+      <TextField
         type="password"
+        label="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
       />
-      <input
+      <TextField
         type="text"
+        label="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         className={styles.input}
       />
 
-      <button className={styles.btn} onClick={handleReg}>
+      <Button
+        variant="contained"
+        className={styles.button}
+        onClick={handleReg}
+        disabled={isLoading}
+      >
         Register
-      </button>
+      </Button>
 
-      <NavLink to={AUTH_PATH}>LogIn</NavLink>
+      <Link href={AUTH_PATH}>LogIn</Link>
     </form>
   );
 });

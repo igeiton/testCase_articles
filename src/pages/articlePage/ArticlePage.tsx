@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import { ArticleCard } from "../../components/articleCard/ArticleCard";
 import { Comments } from "../../components/comments/Comments";
+import { Loading } from "../../components/loading/Loading";
 
 import { store } from "../../store/Store";
 
@@ -22,7 +23,7 @@ export const ArticlePage: FC = observer(() => {
     if (idNumber) loadArticle(idNumber);
   }, [idNumber, loadArticle]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   if (!idNumber || !article) return <div>Page 404</div>;
 

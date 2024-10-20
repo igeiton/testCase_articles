@@ -1,6 +1,7 @@
 import { FC, MouseEvent, useCallback, useState } from "react";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { Button, Link, TextField } from "@mui/material";
 
 import {
   loadFromLocalStorage,
@@ -17,7 +18,7 @@ export const Auth: FC = observer(() => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { isAuthorized, loadTokens } = store.authStore;
+  const { isLoading, isAuthorized, loadTokens } = store.authStore;
 
   const handleLogIn = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -36,24 +37,31 @@ export const Auth: FC = observer(() => {
 
   return (
     <form className={styles.form}>
-      <input
+      <TextField
         type="text"
+        label="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         className={styles.input}
       />
-      <input
+      <TextField
         type="password"
+        label="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
       />
 
-      <button className={styles.btn} onClick={handleLogIn}>
+      <Button
+        variant="contained"
+        className={styles.button}
+        onClick={handleLogIn}
+        disabled={isLoading}
+      >
         LogIn
-      </button>
+      </Button>
 
-      <NavLink to={REGISTRATION_PATH}>register</NavLink>
+      <Link href={REGISTRATION_PATH}>Register</Link>
     </form>
   );
 });

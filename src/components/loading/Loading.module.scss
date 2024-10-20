@@ -1,0 +1,25 @@
+@use "@assets/variables";
+
+.loading_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  svg {
+    animation: loading_spinner 1s infinite;
+    path {
+      fill: variables.$light-text-color;
+    }
+  }
+}
+
+@keyframes loading_spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

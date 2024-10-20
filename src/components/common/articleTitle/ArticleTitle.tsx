@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { TextField } from "@mui/material";
 
 import styles from "./ArticleTitle.module.scss";
 
@@ -15,7 +16,7 @@ export const ArticleTitle: FC<TArticleTitleProps> = ({
   ...props
 }) =>
   isEdit ? (
-    <input
+    <TextField
       type="text"
       value={title}
       onChange={(e) => setTitle(e.target.value)}

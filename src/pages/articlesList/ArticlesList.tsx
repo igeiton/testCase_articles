@@ -1,23 +1,19 @@
-import {
-  ChangeEvent,
-  FC,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
+import { Button, TextField } from "@mui/material";
 
 import { ArticleCard } from "../../components/articleCard/ArticleCard";
+import { Loading } from "../../components/loading/Loading";
 
 import { store } from "../../store/Store";
 
 import styles from "./ArticlesList.module.scss";
+import { FileUploader } from "../../components/fileUploader/FileUploader";
 
 export const ArticlesList: FC = observer(() => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [img, setImg] = useState<File | null>(null);
+  const [img, setImg] = useState<File | string>("");
 
   const { isLoading, articles, loadArticles, addArticle } = store.articlesStore;
 
@@ -39,19 +35,11 @@ export const ArticlesList: FC = observer(() => {
     [title, content, img, loadArticles, addArticle],
   );
 
-  const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      setImg(e.target.files[0]);
-    } else {
-      setImg(null);
-    }
-  }, []);
-
   useEffect(() => {
     loadArticles();
   }, [loadArticles]);
 
-  if (isLoading) return <div>Loading...</div>; // loader
+  if (isLoading) return <Loading />;
 
   if (!articles) return; // error
 
@@ -62,22 +50,34 @@ export const ArticlesList: FC = observer(() => {
         encType="multipart/form-data"
         className={styles.form}
       >
-        <div>New article:</div>
+        <span>New article:</span>
 
-        <input
+        <TextField
           type="text"
+          label="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className={styles.input}
         />
 
-        <textarea
+        <TextField
+          type="text"
+          label="Content"
+          multiline
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          className={styles.input}
         />
 
-        <input type="file" onChange={handleUploadFile} />
+        <FileUploader setFile={setImg} defaultFile={""} />
 
-        <button onClick={handleAddNewArticle}>Add</button>
+        <Button
+          variant="contained"
+          onClick={handleAddNewArticle}
+          className={styles.button}
+        >
+          Add new article
+        </Button>
       </form>
 
       {articles.map((article) => (

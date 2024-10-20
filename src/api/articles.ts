@@ -20,3 +20,7 @@ export const updateArticle = async (
 ): Promise<TNewArticle> => {
   return await api("PUT", `articles/${id}`, data, true);
 };
+
+export const deleteArticle = async (id: number): Promise<void> => {
+  return await api("DELETE", `articles/${id}`);
+};

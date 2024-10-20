@@ -1,19 +1,16 @@
 .form {
   display: flex;
+  align-self: center;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 
+  width: 300px;
+  max-width: 100vw;
+  padding: 15px;
+
+  .button,
   .input {
-    padding: 10px 15px;
-  }
-
-  .btn {
-    padding: 10px 15px;
-
-    &:hover {
-      cursor: pointer;
-    }
+    width: 100%;
   }
 }

@@ -1,11 +1,12 @@
 import { FC, useCallback, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { Button, TextField } from "@mui/material";
 
 import { addComment } from "../../api/comments";
 
 import { store } from "../../store/Store";
 
 import styles from "./NewComment.module.scss";
-import { observer } from "mobx-react-lite";
 
 type TNewCommentProps = {
   content?: string;
@@ -39,14 +40,30 @@ export const NewComment: FC<TNewCommentProps> = observer(
 
     return (
       <div className={styles.new_comment}>
-        <textarea value={text} onChange={(e) => setText(e.target.value)} />
+        <TextField
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          multiline
+        />
 
         <div className={styles.btns}>
           {parentId && (
-            <button onClick={() => onCancel?.call(this)}>Cancel</button>
+            <Button
+              variant="outlined"
+              onClick={() => onCancel?.call(this)}
+              className={styles.button}
+            >
+              Отменить
+            </Button>
           )}
 
-          <button onClick={handleAddComment}>Submit</button>
+          <Button
+            variant="contained"
+            onClick={handleAddComment}
+            className={styles.button}
+          >
+            {parentId ? "Ответить" : "Отправить"}
+          </Button>
         </div>
       </div>
     );

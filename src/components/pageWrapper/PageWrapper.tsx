@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import {
   ARTICLES_LIST_PATH,
   AUTH_PATH,
   CHANGE_PASSWORD_PATH,
 } from "../../configs/routes";
+import { Link } from "@mui/material";
 
 import { store } from "../../store/Store";
 
@@ -17,11 +18,17 @@ export const PageWrapper: FC = () => {
   return (
     <div className={styles.wrapper}>
       <header className={styles.wrapper__header}>
-        <NavLink to={ARTICLES_LIST_PATH}>Articles</NavLink>
-        <NavLink to={CHANGE_PASSWORD_PATH}>Change Password</NavLink>
-        <NavLink to={AUTH_PATH} onClick={logOut}>
+        <Link href={ARTICLES_LIST_PATH} color="inherit">
+          Articles
+        </Link>
+
+        <Link href={CHANGE_PASSWORD_PATH} color="inherit">
+          Change Password
+        </Link>
+
+        <Link href={AUTH_PATH} onClick={logOut} color="inherit">
           LogOut
-        </NavLink>
+        </Link>
       </header>
 
       <div className={styles.wrapper__outlet}>

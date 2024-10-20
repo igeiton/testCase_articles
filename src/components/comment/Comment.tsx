@@ -1,5 +1,8 @@
 import { FC, useCallback, useState } from "react";
 import classNames from "classnames";
+import { observer } from "mobx-react-lite";
+import { Button } from "@mui/material";
+import ReplyIcon from "@mui/icons-material/Reply";
 
 import { CardInfo } from "../cardInfo/CardInfo";
 import { NewComment } from "../newComment/NewComment";
@@ -10,7 +13,6 @@ import { updateComment } from "../../api/comments";
 import { store } from "../../store/Store";
 
 import styles from "./Comment.module.scss";
-import { observer } from "mobx-react-lite";
 
 type TCommentProps = {
   indent: number;
@@ -69,16 +71,24 @@ export const Comment: FC<TCommentProps> = observer(
             <div>{comment.content}</div>
           )}
 
-          <CardInfo author={author} updated={updated} created={created} />
-
-          {hasAccessToEditComment && (
-            <div onClick={() => setEdit(true)}>Edit comment</div>
+          {!isEdit && hasAccessToEditComment && (
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => setEdit(true)}
+            >
+              Редактировать
+            </Button>
           )}
+
+          <CardInfo author={author} updated={updated} created={created} />
 
           {openComment ? (
             <NewComment parentId={id} onCancel={() => setOpenComment(false)} />
           ) : (
-            <span onClick={() => setOpenComment(true)}>Reply</span>
+            <Button size="small" onClick={() => setOpenComment(true)}>
+              <ReplyIcon />
+            </Button>
           )}
         </div>
 

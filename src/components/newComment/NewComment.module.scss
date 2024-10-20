@@ -1,36 +1,14 @@
-@use "@assets/variables";
-
 .new_comment {
   display: flex;
   flex-direction: column;
   gap: 5px;
-
-  textarea {
-    padding: 15px;
-    border-radius: 6px;
-    font-family: "Montserrat", sans-serif;
-    resize: vertical;
-
-    &:focus {
-      outline: none;
-      height: 100px;
-    }
-  }
-
-  button {
-    flex-grow: 1;
-    padding: 5px 10px;
-    border-radius: 6px;
-    background-color: inherit;
-    border: 1px solid variables.$light-border-color;
-
-    &:hover {
-      cursor: pointer;
-      background: variables.$light-background-color;
-    }
-  }
 }
 
 .btns {
   display: flex;
+  gap: 5px;
+
+  .button {
+    width: 100%;
+  }
 }

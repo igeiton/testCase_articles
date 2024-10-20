@@ -1,10 +1,12 @@
-import { ChangeEvent, FC, MouseEvent, useCallback, useState } from "react";
+import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { Button } from "@mui/material";
 
 import { CardInfo } from "../cardInfo/CardInfo";
 import { ArticleTitle } from "../common/articleTitle/ArticleTitle";
 import { ArticleContent } from "../common/articleContent/ArticleContent";
+import { FileUploader } from "../fileUploader/FileUploader";
 
 import { ARTICLES_LIST_PATH } from "../../configs/routes";
 import { TArticle } from "../../models/articlesTypes";
@@ -53,17 +55,6 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
       [title, content, img, article.id, updateArticle, setEdit],
     );
 
-    const handleUploadFile = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.[0]) {
-          setImg(e.target.files[0]);
-        } else {
-          setImg(article.content);
-        }
-      },
-      [article.content],
-    );
-
     const handleReset = useCallback(() => {
       setTitle(article.title);
       setContent(article.content);
@@ -71,21 +62,27 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
       setEdit(false);
     }, [article.title, article.content, article.image]);
 
+    const currentImage = useMemo(
+      () =>
+        img && (
+          <img
+            src={
+              typeof img === "string" ? img : window.URL.createObjectURL(img)
+            }
+            alt={article.slug}
+          />
+        ),
+      [img, article.slug],
+    );
+
     return (
       <div className={styles.article}>
         <div className={styles.article__title}>
           <div className={styles.article__title__image}>
-            {img && (
-              <img
-                src={
-                  typeof img === "string"
-                    ? img
-                    : window.URL.createObjectURL(img)
-                }
-                alt={article.slug}
-              />
+            {currentImage}
+            {isEdit && (
+              <FileUploader setFile={setImg} defaultFile={article.content} />
             )}
-            {isEdit && <input type="file" onChange={handleUploadFile} />}
           </div>
 
           <form
@@ -100,13 +97,6 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
               clippedContent={clippedContent}
               isEdit={isEdit}
             />
-
-            {isEdit && (
-              <div className={styles.btns}>
-                <button onClick={handleReset}>Cancel</button>
-                <button onClick={handleUpdateArticle}>Save</button>
-              </div>
-            )}
 
             {clippedContent && (
               <span
@@ -125,11 +115,34 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
           created={article.created}
         />
 
-        {!clippedContent && !isEdit && userId === article.author.id && (
-          <span onClick={handleChangeEdit} className={styles.link}>
-            Редактировать
-          </span>
-        )}
+        {!clippedContent &&
+          userId === article.author.id &&
+          (isEdit ? (
+            <div className={styles.btns}>
+              <Button
+                variant="outlined"
+                onClick={handleReset}
+                className={styles.button}
+              >
+                Отменить
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleUpdateArticle}
+                className={styles.button}
+              >
+                Сохранить
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={handleChangeEdit}
+              className={styles.link}
+            >
+              Редактировать
+            </Button>
+          ))}
       </div>
     );
   },

@@ -16,6 +16,8 @@ import { TAuthData } from "../models/authTypes";
 import { auth } from "../api/auth";
 
 export class AuthStore {
+  isLoading: boolean = false;
+
   accessToken: string | null;
   refreshToken: string | null;
 
@@ -39,10 +41,14 @@ export class AuthStore {
   };
 
   loadTokens = async (data: TAuthData) => {
-    return await auth(data).then((response) => {
-      this.setAccessToken(response.access);
-      this.setRefreshToken(response.refresh);
-    });
+    this.setLoading(true);
+
+    return await auth(data)
+      .then((response) => {
+        this.setAccessToken(response.access);
+        this.setRefreshToken(response.refresh);
+      })
+      .finally(() => this.setLoading(false));
   };
 
   logOut = () => {
@@ -50,6 +56,10 @@ export class AuthStore {
     this.refreshToken = null;
     removeFromLocalStorage(STORAGE_ACCESS_TOKEN);
     removeFromLocalStorage(STORAGE_REFRESH_TOKEN);
+  };
+
+  setLoading = (isLoading: boolean) => {
+    this.isLoading = isLoading;
   };
 
   setAccessToken = (accessToken: string) => {

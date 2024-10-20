@@ -32,11 +32,6 @@
       overflow: hidden;
       width: 100%;
 
-      .btns {
-        display: flex;
-        width: 100%;
-      }
-
       .link {
         margin-right: auto;
         margin-top: auto;
@@ -51,16 +46,13 @@
     }
   }
 
-  button {
-    flex-grow: 1;
-    padding: 5px 10px;
-    border-radius: 6px;
-    background-color: inherit;
-    border: 1px solid variables.$light-border-color;
+  .btns {
+    display: flex;
+    gap: 5px;
+    width: 100%;
 
-    &:hover {
-      cursor: pointer;
-      background: variables.$light-background-color;
+    .button {
+      width: 100%;
     }
   }
 }

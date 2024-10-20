@@ -16,7 +16,7 @@ export type TRefreshResponse = {
 };
 
 export const api = async <T>(
-  method: "POST" | "GET" | "PUT",
+  method: "GET" | "POST" | "PUT" | "DELETE",
   path: string,
   data?: object,
   defaultHeaders?: boolean,

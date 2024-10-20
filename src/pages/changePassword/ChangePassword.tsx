@@ -1,4 +1,5 @@
 import { FC, MouseEvent, useCallback, useState } from "react";
+import { Button, TextField } from "@mui/material";
 
 import { changePassword } from "../../api/user";
 
@@ -43,10 +44,11 @@ export const ChangePassword: FC = () => {
   return (
     <form name="change_password" className={styles.form}>
       <div>
-        <input
-          placeholder="Old password"
+        <TextField
+          label="Old password"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
+          className={styles.input}
         />
         {errors.old_password && (
           <div className={styles.error}>{errors.old_password}</div>
@@ -54,10 +56,11 @@ export const ChangePassword: FC = () => {
       </div>
 
       <div>
-        <input
-          placeholder="New password"
+        <TextField
+          label="New password"
           value={confirmedPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          className={styles.input}
         />
         {errors.confirmed_password && (
           <div className={styles.error}>{errors.confirmed_password}</div>
@@ -65,19 +68,25 @@ export const ChangePassword: FC = () => {
       </div>
 
       <div>
-        <input
-          placeholder="Confirmed new password"
+        <TextField
+          label="Confirmed new password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
+          className={styles.input}
         />
         {errors.password && (
           <div className={styles.error}>{errors.password}</div>
         )}
       </div>
 
-      <button onClick={handleChangePassword} disabled={isDisabled}>
+      <Button
+        variant="contained"
+        onClick={handleChangePassword}
+        disabled={isDisabled}
+        className={styles.button}
+      >
         Change password
-      </button>
+      </Button>
     </form>
   );
 };
