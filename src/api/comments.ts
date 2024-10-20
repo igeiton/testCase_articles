@@ -19,3 +19,10 @@ export const updateComment = async (
     ...data,
   });
 };
+
+export const deleteComment = async (
+  articleId: number,
+  commentId: number,
+): Promise<void> => {
+  return await api("DELETE", `articles/${articleId}/comments/${commentId}`);
+};

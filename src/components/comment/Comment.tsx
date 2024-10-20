@@ -9,7 +9,7 @@ import { NewComment } from "../newComment/NewComment";
 
 import { TComment } from "../../models/commentsTypes";
 
-import { updateComment } from "../../api/comments";
+import { deleteComment, updateComment } from "../../api/comments";
 import { store } from "../../store/Store";
 
 import styles from "./Comment.module.scss";
@@ -53,6 +53,10 @@ export const Comment: FC<TCommentProps> = observer(
       [parent, article?.id, comment.id, loadArticle],
     );
 
+    const handleDeleteComment = useCallback(() => {
+      if (article?.id) deleteComment(article.id, comment.id);
+    }, [comment.id, article?.id]);
+
     return (
       <div
         className={classNames(styles.comment_wrapper, {
@@ -71,14 +75,28 @@ export const Comment: FC<TCommentProps> = observer(
             <div>{comment.content}</div>
           )}
 
-          {!isEdit && hasAccessToEditComment && (
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={() => setEdit(true)}
-            >
-              Редактировать
-            </Button>
+          {hasAccessToEditComment && (
+            <div className={styles.btns}>
+              <Button
+                size="small"
+                variant="outlined"
+                onClick={handleDeleteComment}
+                className={styles.button}
+              >
+                Удалить комментарий
+              </Button>
+
+              {!isEdit && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => setEdit(true)}
+                  className={styles.button}
+                >
+                  Редактировать
+                </Button>
+              )}
+            </div>
           )}
 
           <CardInfo author={author} updated={updated} created={created} />

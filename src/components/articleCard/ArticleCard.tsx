@@ -11,6 +11,7 @@ import { FileUploader } from "../fileUploader/FileUploader";
 import { ARTICLES_LIST_PATH } from "../../configs/routes";
 import { TArticle } from "../../models/articlesTypes";
 
+import { deleteArticle } from "../../api/articles";
 import { store } from "../../store/Store";
 
 import styles from "./ArticleCard.module.scss";
@@ -54,6 +55,10 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
       },
       [title, content, img, article.id, updateArticle, setEdit],
     );
+
+    const handleDeleteArticle = useCallback(() => {
+      deleteArticle(article.id);
+    }, [article.id]);
 
     const handleReset = useCallback(() => {
       setTitle(article.title);
@@ -115,34 +120,40 @@ export const ArticleCard: FC<TArticleCardProps> = observer(
           created={article.created}
         />
 
-        {!clippedContent &&
-          userId === article.author.id &&
-          (isEdit ? (
-            <div className={styles.btns}>
+        {!clippedContent && userId === article.author.id && (
+          <>
+            {isEdit ? (
+              <div className={styles.btns}>
+                <Button
+                  variant="outlined"
+                  onClick={handleReset}
+                  className={styles.button}
+                >
+                  Отменить
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleUpdateArticle}
+                  className={styles.button}
+                >
+                  Сохранить
+                </Button>
+              </div>
+            ) : (
               <Button
                 variant="outlined"
-                onClick={handleReset}
-                className={styles.button}
+                onClick={handleChangeEdit}
+                className={styles.link}
               >
-                Отменить
+                Редактировать
               </Button>
-              <Button
-                variant="contained"
-                onClick={handleUpdateArticle}
-                className={styles.button}
-              >
-                Сохранить
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant="outlined"
-              onClick={handleChangeEdit}
-              className={styles.link}
-            >
-              Редактировать
+            )}
+
+            <Button variant="outlined" onClick={handleDeleteArticle}>
+              Удалить
             </Button>
-          ))}
+          </>
+        )}
       </div>
     );
   },

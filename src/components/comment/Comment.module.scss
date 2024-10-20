@@ -18,4 +18,13 @@
     border-radius: 12px;
     background-color: variables.$light-background-color;
   }
+
+  .btns {
+    display: flex;
+    gap: 5px;
+
+    .button {
+      width: 100%;
+    }
+  }
 }
